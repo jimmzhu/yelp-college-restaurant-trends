@@ -1,6 +1,8 @@
 # yelp-college-restaurant-trends
 
-Raw Yelp JSON data lives in data/raw
+Raw Yelp JSON data lives in data/raw. Head over to the
+[yelp dataset challenge site](https://www.yelp.com/dataset_challenge/datasethttps://www.yelp.com/dataset_challenge/dataset)
+to obtain the data, and unpack the raw json files in data/raw.
 
 For testing purposes, save classified (college or non-college) JSON samples into
 the respective directory in data/
