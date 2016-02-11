@@ -46,6 +46,8 @@ def findPeakCI( json_str ):
 	print 'Peak Number of Check Ins is:' , str( maxCI_num )
 	print 'Peak Number of Check Ins occurs at ' + maxCI_time
 
+	return maxCI_num
+
 
 def main():
 	
