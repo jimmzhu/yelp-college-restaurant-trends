@@ -1,0 +1,3 @@
+Jupyter
+SQLAlchemy
+psycopg2
