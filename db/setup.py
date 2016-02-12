@@ -1,10 +1,14 @@
 #!/usr/bin/env python
-import sqlalchemy
+
 import os
+import psycopg2
 
 schema_file = os.path.dirname(os.path.abspath(__file__)) + '/schema.sql'
+conn = psycopg2.connect('postgres:///yelp_learning')
+cursor = conn.cursor()
 
-engine = sqlalchemy.create_engine('postgres:///yelp_learning')
-conn = engine.connect()
-conn.execute(open(schema_file, 'r').read())
+cursor.execute(open(schema_file, 'r').read())
+
+conn.commit()
+cursor.close()
 conn.close()
