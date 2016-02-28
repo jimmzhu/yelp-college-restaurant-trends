@@ -3,3 +3,6 @@ textmining
 lda
 numpy
 pbr
+nltk
+unicodedata
+stop_words
