@@ -7,13 +7,11 @@ import os
 import psycopg2
 import psycopg2.extras
 
-cities = ('Charlotte', 'Las Vegas', 'Madison', 'Phoenix',
-          'Pittsburgh', 'Urbana-Champaign')
+DATA_DIR = os.path.dirname(os.path.abspath(__file__)) + '/../data/'
+TRAIN_JSON = DATA_DIR + 'businesses-train.json'
+TEST_JSON = DATA_DIR + 'businesses-test.json'
 
-export_format = os.path.dirname(os.path.abspath(__file__)) + \
-                '/../data/cities/%s/businesses.json'
-
-sql_query = """
+SQL_QUERY = """
     SELECT businesses.business_id,
            min(businesses.name)                     AS name,
            min(businesses.neighborhoods)            AS neighborhoods,
@@ -35,8 +33,7 @@ sql_query = """
     FROM businesses
     INNER JOIN reviews ON reviews.business_id=businesses.business_id
     LEFT JOIN checkins ON checkins.business_id=businesses.business_id
-    WHERE city = %s
-      AND categories @> ('{Food}')
+    WHERE categories @> ('{Food}')
       AND open=true
     GROUP BY businesses.business_id;
 """
@@ -45,19 +42,29 @@ conn = psycopg2.connect('postgres:///yelp_learning')
 cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
 def main():
-    for city in cities:
-        print 'exporting Yelp data for ' + city + '...'
-        export_table(city)
-        conn.commit()
+    cursor.execute(SQL_QUERY)
+
+    print 'exporting Yelp training data...'
+    export_data(TRAIN_JSON, cursor, 6000)
+    conn.commit()
+
+    print 'exporting Yelp test data...'
+    export_data(TEST_JSON, cursor)
+    conn.commit()
+
     cursor.close()
     conn.close()
 
-def export_table(city):
-    filename = export_format % city
-    with open(filename, 'w') as outfile:
-        cursor.execute(cursor.mogrify( sql_query, (city,) ))
-        json_lines = (json.dumps(r, default=json_sanitize)+'\n' for r in cursor)
-        outfile.writelines(json_lines)
+def export_data(export_filename, cursor, limit=None):
+    with open(export_filename, 'w') as outfile:
+        for i, row in enumerate(cursor):
+            if limit and i >= limit:
+                break
+            if (i+1) % 500 == 0:
+                print '\t...%d records' % (i+1)
+
+            json_line = json.dumps(row, default=json_sanitize) + '\n'
+            outfile.write(json_line)
 
 def json_sanitize(value):
     if isinstance(value, Decimal):
