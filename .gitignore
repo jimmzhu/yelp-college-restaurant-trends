@@ -1,3 +1,4 @@
-data/raw/*.json
-data/cities/
+data/**/*.json
+data/**/*.csv
+*.pyc
 env
