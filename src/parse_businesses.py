@@ -1,39 +1,36 @@
 import json
-import os
-from peak_check_in import find_peak_ci
-from categories_histogram import *
-
-DATA_DIR = os.path.dirname(os.path.abspath(__file__)) + '/../data/'
-cities = ('Madison')
-
-def process_businesses_json(json_path, process_fn=None):
-    """ returns list of businesses given json file containing json businesses
-    """
-    results = []
-    with open(DATA_DIR+json_path) as infile:
-        for line in infile:
-            if process_fn:
-                process_fn(json.loads(line))
-            else:
-                results.push(json.loads(lin))
-    return results
-
-def businesses_to_csv(business, csv_path='training.csv', write_mode='a'):
-    """ takes list of business (dicts) and outputs csv file """
-    with open(DATA_DIR+csv_path, write_mode) as outfile:
-        business_row = business_to_row(business)
-        outfile.write(business_row.join(', ') + '\n')
-
-def business_to_row(business):
-    return [
-        find_peak_ci(business)
-    ]
-
+from constants import *
+from peak_checkin import peak_checkins
 
 def main():
-    for city in cities:
-        json_path = 'cities/%s/businesses.json' % city
-        process_business_json(json_path, businesses_to_csv)
+    businesses_to_csv(aggregate_businesses_json(TRAIN_JSON), TRAIN_CSV)
+    businesses_to_csv(aggregate_businesses_json(TEST_JSON), TEST_CSV)
+
+def aggregate_businesses_json(json_path, function=lambda x,y: x+(y,), initial=()):
+    """returns list of businesses given json file containing json businesses"""
+    with open(json_path) as infile:
+        for i, line in enumerate(infile):
+            if (i+1) % 500 == 0:
+                print '...%d' % (i+1)
+            initial = function(initial, json.loads(line))
+    return initial
+
+def businesses_to_csv(businesses, csv_path):
+    """takes list of business (dicts) and outputs csv file"""
+    with open(csv_path, 'w') as outfile:
+        for business in businesses:
+            business_row = business_to_row(business)
+            outfile.write(', '.join(business_row) + '\n')
+
+def business_to_row(business):
+    return reduce(str_flatten, (
+        peak_checkins(business, 3),  # 1x9 (top 3 checkins: (day, hour, count))
+    ), ())
+
+def str_flatten(current, other):
+    if hasattr(other, '__iter__'):
+        return current + tuple(map(str, other))
+    return current + (str(other),)
 
 if __name__ == '__main__':
     main()
