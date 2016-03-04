@@ -1,6 +1,6 @@
 psycopg2
 textmining
-lda
+lda --> requires MSFTVC compiler http://www.microsoft.com/en-us/download/details.aspx?id=44266
 numpy
 pbr
 nltk
