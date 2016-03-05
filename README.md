@@ -2,22 +2,82 @@
 
 ## Data
 
-Raw Yelp JSON data lives in data/raw. Head over to the
+Raw Yelp JSON data lives in `data/raw`. Head over to the
 [yelp dataset challenge site](https://www.yelp.com/dataset_challenge/dataset)
 to obtain the data, and unpack the raw json files in data/raw.
 
-For testing purposes, save JSON samples into their respective directory based on
-the `city` in which the business is located (this should be done first before we
-can do college vs. non-college classification).
+Filtered JSON data lives in `data/businesses.zip`. Unpack this to get two input
+data files:
+- `data/businesses-train.json`
+- `data/businesses-test.json`
 
-For example, `data/cities/Las Vegas/businesses.json` should only contain JSON
-samples for businesses located in Las Vegas.
+From here you may run `src/parse_businesses.py` to generate test and training
+CSV files:
+```Shell
+env/bin/python srcparse_businesses.py
+```
 
 Once we get to the point where we are able to do an initial classification on
 our list of businesses, the classified businesses should be saved in the
 appropriate directory:
   - `data/college/businesses.json`
   - `data/non-college/businesses.json`
+
+## Feature Vectorization
+
+All feature vectorizations should be implemented per business:
+```Python
+def get_categories(business, limit=5):
+    """Return (5) categories of business (dict) represented as a vector of numbers"""
+    return map(category_to_int, business['categories'])[:limit]
+
+def category_to_int(category):
+    """Convert category string into integer representation"""
+    pass
+```
+Once this is done, register your feature transformation function in `src/parse_businesses.py`:
+```
+from name_of_file import get_categories
+...Python
+def business_to_row(business):
+    return reduce(str_flatten, (
+        ...,
+        get_categories(business),  # 1x5
+    ), ())
+```
+**NOTE:
+Make sure that your feature vectorization function returns a fixed-length
+vector. This is essential for making sure the CSV is properly formatted**
+
+## Setup
+
+Get Python pip (for package management)
+```Shell
+# Ubuntu
+sudo apt-get install python-pip python-dev build-essential
+
+# if you already have python (and therefore easy_install)
+sudo easy_install pip
+```
+
+Install virtualenv, create a new virtual environment
+```Shell
+sudo pip install virtualenv
+virtualenv env
+```
+
+Install dependencies
+```Shell
+env/bin/pip install -r requirements.txt
+```
+
+If you want to add new dependencies to the project, be sure to enter them into
+`requirements.txt` and install using `env/bin/pip`, NOT `pip`. *If you're getting
+"permission denied" errors, that's because you're not using* `env/bin/pip`.
+
+See [this article](https://www.dabapps.com/blog/introduction-to-pip-and-virtualenv-python/)
+for a description of why using pip for package management and isolating your
+Python environment with virtualenv is a good idea.
 
 ## Development
 

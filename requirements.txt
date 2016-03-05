@@ -1,0 +1,8 @@
+psycopg2
+textmining
+lda --> requires MSFTVC compiler http://www.microsoft.com/en-us/download/details.aspx?id=44266
+numpy
+pbr
+nltk
+unicodedata
+stop_words
