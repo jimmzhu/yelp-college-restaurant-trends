@@ -7,4 +7,4 @@ nltk
 unicodedata
 stop_words
 scipy ---> download via python wheel at http://www.lfd.uci.edu/~gohlke/pythonlibs/
-scikit-learn
+scikit-learn --> http://scikit-learn.org/stable/documentation.html (Use scikit-learn for various learning packages)
