@@ -1,6 +1,7 @@
 import json
 from constants import *
 from peak_checkin import peak_checkins
+from find_min_dist import find_min_dist_business
 
 def main():
     businesses_to_csv(aggregate_businesses_json(TRAIN_JSON), TRAIN_CSV)
@@ -25,6 +26,7 @@ def businesses_to_csv(businesses, csv_path):
 def business_to_row(business):
     return reduce(str_flatten, (
         peak_checkins(business, 3),  # 1x9 (top 3 checkins: (day, hour, count))
+        find_min_dist_business(business),     # 1x1
     ), ())
 
 def str_flatten(current, other):
