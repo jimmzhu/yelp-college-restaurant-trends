@@ -79,6 +79,11 @@ See [this article](https://www.dabapps.com/blog/introduction-to-pip-and-virtuale
 for a description of why using pip for package management and isolating your
 Python environment with virtualenv is a good idea.
 
+## Dependencies
+- [MSFTVC compiler](http://www.microsoft.com/en-us/download/details.aspx?id=44266)
+- [python wheel](http://www.lfd.uci.edu/~gohlke/pythonlibs/)
+- [scikit-learn](http://scikit-learn.org/stable/documentation.html)
+
 ## Development
 
 Code should be saved in the `src` directory, while data goes in the `data`

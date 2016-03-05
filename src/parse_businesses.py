@@ -2,8 +2,9 @@ import json
 from constants import *
 from peak_checkin import peak_checkins
 from find_min_dist import find_min_dist_business, load_all_lat_long_data
-from vectorize_categories import vectorize_categories
+from vectorize_categories import vectorize_categories, load_categories
 
+ALL_CATEGORIES = load_categories()
 LAT_LONG_DATA = load_all_lat_long_data()
 
 def main():
@@ -28,9 +29,9 @@ def businesses_to_csv(businesses, csv_path):
 
 def business_to_row(business):
     return reduce(str_flatten, (
-        peak_checkins(business, 3),       # 1x9 (top 3 checkins: (day, hour, count))
-        vectorize_categories( business ), # 1x251
-        find_min_dist_business(business, LAT_LONG_DATA), # 1x1
+        peak_checkins(business, 3),                       # 1x9 (top 3 checkins: (day, hour, count))
+        vectorize_categories(business, ALL_CATEGORIES),   # 1x169
+        find_min_dist_business(business, LAT_LONG_DATA),  # 1x1
     ), ())
 
 def str_flatten(current, other):
