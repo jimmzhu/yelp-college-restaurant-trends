@@ -20,7 +20,6 @@ def vectorize_categories(business):
 		if elt in ALL_CATEGORIES:
 			result[ALL_CATEGORIES.index( elt )] = 1
 
-
 	return result;
 
 def main():

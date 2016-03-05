@@ -3,15 +3,13 @@ from constants import *
 from math import *
 
 path_to_latlongdata = DATA_DIR + 'college_lat_long.csv'
-LAT_LONG_DATA = None
 
-def find_min_dist_business(business):
-    return find_min_dist(business['latitude'], business['longitude'])
+def find_min_dist_business(business, ll_array=None):
+    return find_min_dist(business['latitude'], business['longitude'], ll_array)
 
 def load_all_lat_long_data():
     #Function retrieves all of the Longitude Latitude pairs coming from the CSV
     #file mentioned above.
-    print 'load_all_lat_long_data called'
 
     with open(path_to_latlongdata,'rb') as csvfile:
         loc_reader = csv.reader(csvfile, delimiter=',')
@@ -26,7 +24,6 @@ def load_all_lat_long_data():
             #print line
 #            print i , 'lat: ' + line[4] , 'long: ' + line[3]
 
-
             elt = {}
             elt['latitude']  = float( line[4] )
             elt['longitude'] = float( line[3] )
@@ -37,13 +34,9 @@ def load_all_lat_long_data():
 
     return lat_long_array
 
-def find_min_dist( business_latitude , business_longitude ):
-    global LAT_LONG_DATA
-
-    if LAT_LONG_DATA is None:
-        LAT_LONG_DATA = load_all_lat_long_data()
-
-    ll_array = LAT_LONG_DATA
+def find_min_dist( business_latitude , business_longitude, ll_array=None ):
+    if ll_array is None:
+        ll_array = load_all_lat_long_data()
 
     #Create an array of dictionaries, where each dictionary contains:
     # - Latitude Coordinate (saved under the 'latitude' bin)
