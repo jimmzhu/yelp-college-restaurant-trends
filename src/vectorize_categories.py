@@ -15,7 +15,10 @@ def vectorize_categories(business):
 
 	#Place 1's in the positions that correspond to where the business's categories are.
 	for elt in business[CATEGORIES_ATTRIBUTE]:
-		result[ALL_CATEGORIES.index( elt )] = 1
+
+		#Ignore all categories not in training set.
+		if elt in ALL_CATEGORIES:
+			result[ALL_CATEGORIES.index( elt )] = 1
 
 	return result;
 
