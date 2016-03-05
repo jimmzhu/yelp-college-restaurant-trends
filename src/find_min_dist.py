@@ -8,6 +8,8 @@ LAT_LONG_DATA = None
 def find_min_dist_business(business):
     return find_min_dist(business['latitude'], business['longitude'])
 
+LAT_LONG_ARRAY = []
+
 def load_all_lat_long_data():
     #Function retrieves all of the Longitude Latitude pairs coming from the CSV
     #file mentioned above.
@@ -25,7 +27,6 @@ def load_all_lat_long_data():
             #array = line.split(',')
             #print line
 #            print i , 'lat: ' + line[4] , 'long: ' + line[3]
-
 
             elt = {}
             elt['latitude']  = float( line[4] )
