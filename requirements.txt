@@ -6,3 +6,5 @@ pbr
 nltk
 unicodedata
 stop_words
+scipy ---> download via python wheel at http://www.lfd.uci.edu/~gohlke/pythonlibs/
+scikit-learn
