@@ -1,6 +1,7 @@
 import csv
+import operator
 from constants import *
-from math import sin, cos, sqrt, atan2, radians
+from geopy.distance import great_circle, vincenty
 
 path_to_latlongdata = DATA_DIR + 'college_lat_long.csv'
 
@@ -39,36 +40,22 @@ def find_min_dist( business_latitude , business_longitude, ll_array=None ):
         ll_array = load_all_lat_long_data()
 
     #Find minimum distance between a given business JSON object and ALL of the pairs in this list
-    distances = []
+    dists = []
     point1 = (business_latitude, business_longitude)
-    distances = \
+    dists = \
         (dist_lat_long(point1, (l['latitude'], l['longitude'])) for l in ll_array)
 
-#    print distances
+    min_index, min_dist = min(enumerate(dists), key=operator.itemgetter(1))
+    point2 = (ll_array[min_index]['latitude'], ll_array[min_index]['longitude'])
 
-#    print 'Minimum is: ',str(min(distances))
-
-    return min(distances)
+    # get accurate distance in miles between points
+    min_distance_miles = vincenty(point1, point2).miles
+    return min_distance_miles
 
 def dist_lat_long(point1, point2):
     lat1, long1 = point1
     lat2, long2 = point2
-
-    # latitudes very far apart
-    if cos(lat1) * cos(lat2) < 0:
-        return 999
-
-    # approximate radius of earth in km
-    R = 6373.0
-
-    dlong = radians(long2) - radians(long1)
-    dlat = radians(lat2) - radians(lat1)
-    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlong / 2)**2
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
-
-    distance = R * c
-    return distance
-
+    return (lat1 - lat2)**2 + (long1 - long2)**2
 
 def main():
 

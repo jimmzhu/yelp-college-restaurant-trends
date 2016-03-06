@@ -1,10 +1,11 @@
-psycopg2
-textmining
-lda --> requires MSFTVC compiler http://www.microsoft.com/en-us/download/details.aspx?id=44266
+geopy
+lda
+nltk
 numpy
 pbr
-nltk
-unicodedata
+psycopg2
+scikit-learn
+scipy
 stop_words
-scipy ---> download via python wheel at http://www.lfd.uci.edu/~gohlke/pythonlibs/
-scikit-learn --> http://scikit-learn.org/stable/documentation.html (Use scikit-learn for various learning packages)
+textmining
+unicodedata
