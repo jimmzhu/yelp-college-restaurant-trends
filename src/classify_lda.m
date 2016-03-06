@@ -75,11 +75,11 @@ for set_index = 1:length(x_data_sets)
 end
 
 figure(1);
-plot(dist_thresholds, p_errors{1}); hold on;
-plot(dist_thresholds, p_errors{2}, 'r'); hold on;
-plot(dist_thresholds, p_yes, 'g', dist_thresholds, p_no, 'm'); hold off;
+plot(dist_thresholds, p_yes, 'g', dist_thresholds, p_no, 'm'); hold on;
+plot(dist_thresholds, p_errors{1});
+plot(dist_thresholds, p_errors{2}, 'r'); hold off;
 title('Error rate vs. distance threshold, Gaussian linear discriminant classifier');
-xlabel('Chosen distance threshold');
+xlabel('Chosen distance threshold (mi)');
 ylabel('Probability of error');
-legend('Training set', 'Test set', ...
-       'Probability within threshold', 'Probability outside threshold');
+legend('Probability within threshold', 'Probability outside threshold', ...
+       'Training set', 'Test set');

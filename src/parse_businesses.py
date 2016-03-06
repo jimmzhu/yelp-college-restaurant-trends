@@ -14,16 +14,17 @@ def main():
 def aggregate_businesses_json(json_path, function=lambda x,y: x+(y,), initial=()):
     """returns list of businesses given json file containing json businesses"""
     with open(json_path) as infile:
-        for i, line in enumerate(infile):
-            if (i+1) % 500 == 0:
-                print '...%d' % (i+1)
+        for line in infile:
             initial = function(initial, json.loads(line))
+    print 'JSON file loaded: %s' % json_path
     return initial
 
 def businesses_to_csv(businesses, csv_path):
     """takes list of business (dicts) and outputs csv file"""
     with open(csv_path, 'w') as outfile:
-        for business in businesses:
+        for i, business in enumerate(businesses):
+            if (i+1) % 500 == 0:
+                print '...%d' % (i+1)
             business_row = business_to_row(business)
             outfile.write(', '.join(business_row) + '\n')
 
