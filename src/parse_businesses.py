@@ -30,9 +30,9 @@ def businesses_to_csv(businesses, csv_path):
 
 def business_to_row(business):
     return reduce(str_flatten, (
-        peak_checkins(business, 3),                       # 1x9 (top 3 checkins: (day, hour, count))
-        vectorize_categories(business, ALL_CATEGORIES),   # 1x168
-        find_min_dist_business(business, LAT_LONG_DATA),  # 1x1
+        peak_checkins(business),                         # 1x56 (8 bins per day)
+        vectorize_categories(business, ALL_CATEGORIES),  # 1x168
+        find_min_dist_business(business, LAT_LONG_DATA), # 1x1
     ), ())
 
 def str_flatten(current, other):
