@@ -1,6 +1,6 @@
 import csv
 from constants import *
-from math import *
+from math import sin, cos, sqrt, atan2, radians
 
 path_to_latlongdata = DATA_DIR + 'college_lat_long.csv'
 
@@ -30,7 +30,7 @@ def load_all_lat_long_data():
 
             lat_long_array.append( elt )
 
-#    print 'Created array of latitude-longitude pairs.'
+    print 'Created array of latitude-longitude pairs.'
 
     return lat_long_array
 
@@ -38,24 +38,36 @@ def find_min_dist( business_latitude , business_longitude, ll_array=None ):
     if ll_array is None:
         ll_array = load_all_lat_long_data()
 
-    #Create an array of dictionaries, where each dictionary contains:
-    # - Latitude Coordinate (saved under the 'latitude' bin)
-    # - Longitude Coordinate (saved under the 'longitude' bin)
-
-    ll_array = load_all_lat_long_data()
-
     #Find minimum distance between a given business JSON object and ALL of the pairs in this list
     distances = []
-
-    for location in ll_array:
-
-        distances.append( sqrt( pow(location['latitude'] - business_latitude , 2) + pow( location['longitude'] - business_longitude , 2 ) ) )
+    point1 = (business_latitude, business_longitude)
+    distances = \
+        (dist_lat_long(point1, (l['latitude'], l['longitude'])) for l in ll_array)
 
 #    print distances
 
 #    print 'Minimum is: ',str(min(distances))
 
     return min(distances)
+
+def dist_lat_long(point1, point2):
+    lat1, long1 = point1
+    lat2, long2 = point2
+
+    # latitudes very far apart
+    if cos(lat1) * cos(lat2) < 0:
+        return 999
+
+    # approximate radius of earth in km
+    R = 6373.0
+
+    dlong = radians(long2) - radians(long1)
+    dlat = radians(lat2) - radians(lat1)
+    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlong / 2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    distance = R * c
+    return distance
 
 
 def main():
