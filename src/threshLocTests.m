@@ -26,6 +26,9 @@ mean_dist_to_college = tr_data(end,:) * ( 1/size(tr_data,2) ) * ones( size( tr_d
 tr_pError = [];
 test_pError = [];
 
+%Debugging sign error
+sign_correctQ = [];
+
 x = tr_data( [1 : end-1], : );
 z = test_data( [1 : end-1], : );
 
@@ -77,15 +80,24 @@ for th_exp = [ -1 : 0.01 : 2 ]
 	%Linear Discriminant should be easily 
 	f_lin_discr = rayleigh_eVec(:,max_rEVal_ind);
 
+	check_sign = sign( f_lin_discr' * mu2 - f_lin_discr'*( mu2 + mu1)/2 );
+
+	%Check the sign of our linear discriminant. And fix it if it is pointing opposite of the way we need it to.
+	if check_sign == -1 
+		f_lin_discr = -f_lin_discr;
+	end
+
 	%Calculate classification results on training and test_data.
 	y = f_lin_discr' * ( x - repmat( ( mu2+mu1 )/2 , 1 , size( x , 2 ) ) );
 
 	y2 = f_lin_discr' * ( z - repmat( ( mu2+mu1 )/2 , 1 , size( z , 2 ) ) );
 
-	%sign_correct = sign( f_lin_discr' * mu2 + f_lin_discr'*( mu2 - mu1) );
+	sign_correctQ = [ sign_correctQ sign( f_lin_discr' * mu2 + f_lin_discr'*( mu2 + mu1)/2 ) ];
 
 	%Probability of Error
 
+	%Be careful here, because the labels are constructed the OPPOSITE of how the lin. discr. was constructed.
+	%For example, tr_labels =1 when the point is in class mu1, which would in fact be when y < 0!
 	tr_pError = [ tr_pError sum( ( (y < 0) + (-1)*(y>=0) ) ~= tr_labels )/length(tr_labels) ];  
 	test_pError = [ test_pError sum( ( (y2 < 0) + (-1)*(y2>=0) ) ~= test_labels )/length(test_labels) ];
 end
