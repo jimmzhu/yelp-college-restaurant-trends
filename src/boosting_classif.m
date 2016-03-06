@@ -63,7 +63,7 @@ loopNum = 0;
 
 margins = [];
 
-boosting_iter = 50;
+boosting_iter = 100;
 
 %Stump Function Variables.
 stumpThresh = 0;
@@ -136,6 +136,8 @@ final_test_errors = [ final_test_errors test_error(end)]
 
 figure;
 plot(tr_err)
+hold on;
+plot(test_error)
 xlabel('Iteration number')
 ylabel('P_E_r_r_o_r')
 title('P_E_r_r_o_r vs. Iteration # for Our Boosting algorithm w/ Decision Stumps')
