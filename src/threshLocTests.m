@@ -2,7 +2,7 @@
 
 
 clear all;
-close all;
+%close all;
 clc;
 
 %% Import CSV Data
@@ -73,7 +73,7 @@ for th_exp = [ -1 : 0.01 : 2 ]
 
 	gamma = 10^(-1);
 
-	[ rayleigh_eVec rayleigh_eVal ] = eig( (S_W + gamma * eye( size(S_W))) \ S_B );
+	[ rayleigh_eVec rayleigh_eVal ] = eig( (S_W + gamma * eye( size(S_W)))^(-1) * S_B );
 
 	[ max_rEVal max_rEVal_ind ] = max( diag( rayleigh_eVal ) );
 
