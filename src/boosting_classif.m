@@ -15,7 +15,7 @@ num_tr_samples   = size(tr_data,2);
 num_test_samples = size( test_data,2);
 
 %Notes: Each business (column or tr_data and test_data) ...
-%		- First 9 entries are top 3 check in time data where peak check in data is formatted as(day,hour,number of check ins )
+%		- First 56 entries are top 3 check in time data where peak check in data is formatted as(day,hour,number of check ins )
 %		- Next 251 entries are 1 hot encoding of the categories involved.
 %		- Final entry contains distance in longitude-lattitude of a given business to the nearest college
 
@@ -28,9 +28,18 @@ mean_dist_to_college = tr_data(end,:) * ( 1/size(tr_data,2) ) * ones( size( tr_d
 tr_pError = [];
 test_pError = [];
 
-x = tr_data( [1 : end-1], : );
-z = test_data( [1 : end-1], : );
+%Choosing all of data or subset
+chooseCheckInsOnly = false;
 
+if ~chooseCheckInsOnly
+	x = tr_data( [1 : end-1], : );
+	z = test_data( [1 : end-1], : );
+end
+
+if chooseCheckInsOnly
+	x = tr_data( [ 1 : 56] , : );
+	z = test_data( [ 1 : 56 ] , :);
+end
 %% Adaboost
 
 %Loop over this for multiple different thresholds.
@@ -63,7 +72,7 @@ loopNum = 0;
 
 margins = [];
 
-boosting_iter = 100;
+boosting_iter = 250;
 
 %Stump Function Variables.
 stumpThresh = 0;

@@ -21,12 +21,12 @@ function [ dim , T , oppOrNah ] = findUMin_stumps( data , labels , weights )
 sum_wl     = []; %If this is for all u's
 sum_wl_opp = []; %Then this is for all -u's
 
-N = 100;
+N = 50;
 J = size(data,1); %Number of dimensions stored at J
 
 for i = 0 : N
    
-    t = i / (2*N) ; %Threshold is defined as such!
+    t = i / (N^2) ; %Threshold is defined as such!
     
     for j = 1 : J
         
@@ -72,9 +72,9 @@ min_t_indexes = indMat_columns( concat_sums == min_sum );
 min_t_ind = min_t_indexes(1);
 
 if( min_t_ind(1) > (N+1) )
-    min_t = (min_t_ind - (N + 1) - 1)/(2*N);
+    min_t = (min_t_ind - (N + 1) - 1)/(N^2);
 else
-    min_t = (min_t_ind - 1)/(2*N);
+    min_t = (min_t_ind - 1)/(N^2);
 end
 
 %Create outputs
