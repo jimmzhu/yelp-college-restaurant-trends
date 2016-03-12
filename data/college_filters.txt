@@ -1,0 +1,30 @@
+School         562
+College of     361
+Career         224
+Academy        146
+Community      558
+Cosmetology    238
+Beauty         615
+Hair           193
+Center         142
+Barber         26
+Skin           5
+Graduate       12
+Business       47
+Education      31
+Salon          43
+Design         33
+Medical        85
+Nursing        33
+Health         33
+Art            75
+Music          7
+Management     5
+Anesthesia     4
+Inc            77
+Seminary       125
+DeVry          27
+ITT Tech       146
+Pima Medical   13
+Kaplan College 31
+University of Phoenix  83
