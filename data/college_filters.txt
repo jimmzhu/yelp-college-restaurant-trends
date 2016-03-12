@@ -14,7 +14,7 @@ Business       47
 Education      31
 Salon          43
 Design         33
-Medical        85
+Medical        96
 Nursing        33
 Health         33
 Art            75
@@ -23,8 +23,39 @@ Management     5
 Anesthesia     4
 Inc            77
 Seminary       125
+Yeshiva        29
 DeVry          27
 ITT Tech       146
 Pima Medical   13
-Kaplan College 31
+Kaplan         41
+InterCoast     8
+Argosy         20
+Brown Mackie   28
+Daymar         15
+Globe          11
+Heald College  12
+Herzing        10
+Everest        80
+CollegeAmerica 7
+Anthem         12
+Miller-Motte   17
+SAE Institute  6
+South Univ     11
+Strayer        18
+North-West     7
+Carrington     19
+Office         22
+Admin          7
+San Joaquin    11
+Virgina Colleg 26
+Fortis         44
+Vatterott      18
+Remington      19
+Platt          11
+City College   26
+Lincoln Technical 20
+Bryant & Stratton 19
+National American 31
+National College 9
+Sanford-Brown  20+
 University of Phoenix  83
