@@ -1,5 +1,5 @@
-gamma = 0.01
-dist_thresholds = 0.5:0.1:5;
+gamma = 0.01;
+dist_thresholds = 0.5:0.1:9.5;
 total_thresholds = length(dist_thresholds);
 
 x_train = csvread('../data/businesses-train.csv'); % (:,[1:56, end]);
