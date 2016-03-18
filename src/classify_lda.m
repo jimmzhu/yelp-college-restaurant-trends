@@ -2,8 +2,8 @@ gamma = 0.01;
 dist_thresholds = 0.5:0.1:9.5;
 total_thresholds = length(dist_thresholds);
 
-x_train = csvread('../data/businesses-train.csv'); % (:,[1:56, end]);
-x_test = csvread('../data/businesses-test.csv');   % (:,[1:56, end]);
+x_train = csvread('../data/x_train_with_subtopics.csv'); % (:,[1:56, end]);
+x_test = csvread('../data/x_test_with_subtopics.csv');   % (:,[1:56, end]);
 x_data_sets = { x_train, x_test };
 [~, d_plus_1] = size(x_train);
 d = d_plus_1 - 1;

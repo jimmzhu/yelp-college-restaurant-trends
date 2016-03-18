@@ -24,7 +24,7 @@ subplot(3,1,1);
 bar(1:7, checkins_yes_by_hour');
 axis([0.5 7.5 0 0.07]);
 set(gca, 'XTickLabel', { 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' });
-title('Mean frequency of checkins, within 2mi of college');
+title('Mean frequency of checkins, within 5.2mi of college');
 xlabel('Checkin hours over the week');
 ylabel('Checkin frequency');
 
@@ -32,14 +32,14 @@ subplot(3,1,2);
 bar(1:7, checkins_no_by_hour');
 axis([0.5 7.5 0 0.07]);
 set(gca, 'XTickLabel', { 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' });
-title('Mean frequency of checkins, outside 2mi of college');
+title('Mean frequency of checkins, outside 5.2mi of college');
 xlabel('Checkin hours over the week');
 ylabel('Checkin frequency');
 
 subplot(3,1,3);
 bar(1:7, checkins_discriminant_by_hour');
 set(gca, 'XTickLabel', { 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' });
-axis([0.5 7.5 -0.2 0.2]);
+axis([0.5 7.5 -0.05 0.05]);
 title('Discriminant frequency of checkins');
 xlabel('Checkin hours over the week');
-ylabel('Checkin frequency');
+ylabel('Checkin discriminant');

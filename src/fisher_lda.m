@@ -10,6 +10,8 @@ gamma = 0.01;
 
 lda_pairs = { [1 2] };
 discriminants = zeros(d, length(lda_pairs));
+mu_0_full = zeros(d, length(lda_pairs));
+mu_1_full = zeros(d, length(lda_pairs));
 
 for i = 1:length(lda_pairs)
   lda_pair = lda_pairs{i};
@@ -33,7 +35,10 @@ for i = 1:length(lda_pairs)
     [~, ~, V] = svd(Sw \ (mu_1 - mu_0)*(mu_1 - mu_0)');
     discriminants(nonzero_indices,i) = V(:,1);
 
-    varargout{1} = discriminant_diagonal;
+    mu_0_full(nonzero_indices,i) = mu_0;
+    mu_1_full(nonzero_indices,i) = mu_1;
+    varargout{1} = mu_1_full;
+    varargout{2} = mu_0_full;
     disp(sum(nonzero_indices));
   else
     Sigma_0 = cov(x_by_label{lda_pair(1)});

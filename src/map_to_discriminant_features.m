@@ -21,7 +21,7 @@ z_categories_test = categories_test * categories_discriminant;
 
 subtopics_train = csvread('../data/subtopics_vector_train.csv');
 subtopics_test = csvread('../data/subtopics_vector_test.csv');
-[subtopics_discriminant, mu_diff] = ...
+[subtopics_discriminant, mu_x_yes_subtopics, mu_x_no_subtopics] = ...
   fisher_lda(subtopics_train, kron(y_train, [1; 1; 1]), 'sparse');
 z_subtopics_train = subtopics_train * subtopics_discriminant;
 z_subtopics_test = subtopics_test * subtopics_discriminant;
